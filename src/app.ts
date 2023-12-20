@@ -11,10 +11,11 @@ app.use(express.json());
 const port = 3000;
 
 app.get("/", async function(req, res) {
-  // const { userId } = req.body;
+  const { userId } = req.body;
 
   const userRepo = AppDataSource.getRepository(User);
   const profileRepo = AppDataSource.getRepository(Profile);
+  
   //find all the user records
   const allRecords = await userRepo.find();
 
@@ -34,32 +35,32 @@ app.get("/", async function(req, res) {
   }
 
   // delete a user
-  // await userRepo.delete(userId);
+  await userRepo.delete(userId);
 
   // add a new user
-  // let profile: Profile = new Profile();
+  let profile: Profile = new Profile();
 
-  // profile.gender = "male";
-  // profile.photo = "this is photo";
+  profile.gender = "male";
+  profile.photo = "this is photo";
 
-  // let user: User = new User();
-  // user.email = "jay1@gmail.com";
-  // user.firstName = "jay1";
-  // user.lastName = "sheth";
-  // user.profile = profile;
+  let newUser: User = new User();
+  newUser.email = "jay1@gmail.com";
+  newUser.firstName = "jay1";
+  newUser.lastName = "sheth";
+  newUser.profile = profile;
 
-  // const userInserted = userRepo.save(user);
+  const userInserted = userRepo.save(newUser);
 
   // update a user
 
-  // const updatedUser = await userRepo.update(userId, {
-  //   firstName: "jay2",
-  //   lastName: "sheth",
-  // });
+  const updatedUser = await userRepo.update(userId, {
+    firstName: "jay2",
+    lastName: "sheth",
+  });
 
   // filter user
 
-  // const user = await userRepo.findOne({ where: { id: userId }});
+  const user = await userRepo.findOne({ where: { id: userId }});
 
   res.send();
 });
